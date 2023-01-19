@@ -1,9 +1,9 @@
 import Head from 'next/head'
 
-const titleDefault = 'React Three Next Starter'
+const titleDefault = 'Rick and Morty 3D Gallery'
 const url = 'https://react-three-next.vercel.app/'
-const description = 'The easiest and fastest way to create a 3D website using React Three Fiber and NextJS'
-const author = 'Author'
+const description = 'Rick and Morty 3D Gallery'
+const author = 'Kfir Fitousi'
 
 export default function Header({ title = titleDefault }) {
   return (
