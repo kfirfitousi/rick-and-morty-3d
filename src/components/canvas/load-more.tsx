@@ -23,7 +23,7 @@ export function LoadMore({
         scroll.el.scrollLeft = 0; // reset scroll position, couldn't find a better way
       }}
     >
-      <boxBufferGeometry args={[1, 1, 1]} />
+      <boxGeometry args={[1, 1, 1]} />
       <meshBasicMaterial color="#a1a1aa" />
       <Text color="#27272a" fontSize={0.15} position={[0, 0, 0.5]}>
         Load More

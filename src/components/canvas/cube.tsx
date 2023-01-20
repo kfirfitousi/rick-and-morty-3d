@@ -91,7 +91,7 @@ export function Cube({ index, total, character, ...props }: CubeProps) {
       >
         {character.name}
       </Text>
-      <boxBufferGeometry args={[1, 1, 1]} />
+      <boxGeometry args={[1, 1, 1]} />
       <meshBasicMaterial map={texture} />
       <group position={[0, -0.75, 0]} ref={descRef}>
         {selected === index && (
