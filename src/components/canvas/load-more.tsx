@@ -25,7 +25,12 @@ export function LoadMore({
     >
       <boxGeometry args={[1, 1, 1]} />
       <meshBasicMaterial color="#a1a1aa" />
-      <Text color="#27272a" fontSize={0.15} position={[0, 0, 0.5]}>
+      <Text
+        color="#27272a"
+        font="/Inter.ttf"
+        fontSize={0.15}
+        position={[0, 0, 0.5]}
+      >
         Load More
       </Text>
     </mesh>

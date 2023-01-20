@@ -86,6 +86,7 @@ export function Cube({ index, total, character, ...props }: CubeProps) {
       <Text
         ref={nameRef}
         color="#D4D4D8"
+        font="/Inter.ttf"
         fontSize={0.12}
         position={[0, 0.67, 0]}
       >
@@ -96,13 +97,23 @@ export function Cube({ index, total, character, ...props }: CubeProps) {
       <group position={[0, -0.75, 0]} ref={descRef}>
         {selected === index && (
           <>
-            <Text color="#D4D4D8" fontSize={0.08}>
+            <Text color="#D4D4D8" font="/Inter.ttf" fontSize={0.08}>
               Status: {character.status}
             </Text>
-            <Text color="#D4D4D8" fontSize={0.08} position={[0, -0.1, 0]}>
+            <Text
+              color="#D4D4D8"
+              font="/Inter.ttf"
+              fontSize={0.08}
+              position={[0, -0.1, 0]}
+            >
               Species: {character.species}
             </Text>
-            <Text color="#D4D4D8" fontSize={0.08} position={[0, -0.2, 0]}>
+            <Text
+              color="#D4D4D8"
+              font="/Inter.ttf"
+              fontSize={0.08}
+              position={[0, -0.2, 0]}
+            >
               Origin: {character.origin.name}
             </Text>
           </>

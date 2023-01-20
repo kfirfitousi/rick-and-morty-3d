@@ -39,7 +39,12 @@ export default function Page() {
         <Scene gl={{ antialias: false }} dpr={[1, 1.5]} className="row-start-2">
           <Suspense
             fallback={
-              <Text color="#FECDD3" fontSize={0.25} position={[0, 0, 0]}>
+              <Text
+                color="#FECDD3"
+                font="/Inter.ttf"
+                fontSize={0.25}
+                position={[0, 0, 0]}
+              >
                 Loading...
               </Text>
             }
