@@ -3,12 +3,12 @@ import { Preload } from '@react-three/drei';
 import { useGalleryStore } from '@/stores/gallery-store';
 
 export function Scene({ children, ...props }) {
-  const setSelected = useGalleryStore((state) => state.setSelected);
+  const select = useGalleryStore((state) => state.select);
 
   return (
     <Canvas
       {...props}
-      onPointerMissed={() => setSelected(null)}
+      onPointerMissed={() => select(null)}
       camera={{
         position: [0, 0, 10],
         fov: 30,

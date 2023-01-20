@@ -3,6 +3,7 @@ import { useFrame, type MeshProps } from '@react-three/fiber';
 import { useTexture, Text, useScroll } from '@react-three/drei';
 import { useGalleryStore } from '@/stores/gallery-store';
 import { type Character } from '@/types';
+import { CharacterInfo } from '@/components/canvas/character-info';
 import { damp } from 'three/src/math/MathUtils';
 
 interface CubeProps extends MeshProps {
@@ -14,12 +15,11 @@ interface CubeProps extends MeshProps {
 export function Cube({ index, total, character, ...props }: CubeProps) {
   const cubeRef = useRef(null!);
   const nameRef = useRef(null!);
-  const descRef = useRef(null!);
-
+  const infoRef = useRef(null!);
   const scroll = useScroll();
   const texture = useTexture(character.image);
+  const select = useGalleryStore((state) => state.select);
   const selected = useGalleryStore((state) => state.selected);
-  const setSelected = useGalleryStore((state) => state.setSelected);
 
   const isSelected = index === selected;
   const { position } = props;
@@ -27,7 +27,7 @@ export function Cube({ index, total, character, ...props }: CubeProps) {
   useFrame((_, delta) => {
     const cube = cubeRef.current;
     const name = nameRef.current;
-    const desc = descRef.current;
+    const desc = infoRef.current;
 
     const y = scroll.curve(index / total - total / total ** 2, 2 / total);
 
@@ -65,24 +65,21 @@ export function Cube({ index, total, character, ...props }: CubeProps) {
       (scroll.offset > index / total + 1.35 / total ||
         scroll.offset < index / total - 1.35 / total)
     ) {
-      setSelected(null);
+      select(null);
     }
   });
 
+  const onClick = () => {
+    if (selected === index) {
+      return select(null);
+    }
+    select(index);
+    scroll.el.scrollLeft =
+      ((scroll.el.scrollWidth - scroll.el.clientWidth) / total) * index;
+  };
+
   return (
-    <mesh
-      ref={cubeRef}
-      onClick={() => {
-        if (selected === index) {
-          setSelected(null);
-        } else {
-          setSelected(index);
-          scroll.el.scrollLeft =
-            ((scroll.el.scrollWidth - scroll.el.clientWidth) / total) * index;
-        }
-      }}
-      {...props}
-    >
+    <mesh ref={cubeRef} onClick={onClick} {...props}>
       <Text
         ref={nameRef}
         color="#D4D4D8"
@@ -94,29 +91,13 @@ export function Cube({ index, total, character, ...props }: CubeProps) {
       </Text>
       <boxGeometry args={[1, 1, 1]} />
       <meshBasicMaterial map={texture} />
-      <group position={[0, -0.75, 0]} ref={descRef}>
+      <group position={[0, -0.75, 0]} ref={infoRef}>
         {selected === index && (
-          <>
-            <Text color="#D4D4D8" font="/Inter.ttf" fontSize={0.08}>
-              Status: {character.status}
-            </Text>
-            <Text
-              color="#D4D4D8"
-              font="/Inter.ttf"
-              fontSize={0.08}
-              position={[0, -0.1, 0]}
-            >
-              Species: {character.species}
-            </Text>
-            <Text
-              color="#D4D4D8"
-              font="/Inter.ttf"
-              fontSize={0.08}
-              position={[0, -0.2, 0]}
-            >
-              Origin: {character.origin.name}
-            </Text>
-          </>
+          <CharacterInfo
+            status={character.status}
+            species={character.species}
+            originName={character.origin.name}
+          />
         )}
       </group>
     </mesh>

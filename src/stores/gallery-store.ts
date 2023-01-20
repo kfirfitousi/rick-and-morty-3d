@@ -4,7 +4,7 @@ import { devtools } from 'zustand/middleware';
 type GalleryStore = {
   selected: number | null;
   query: string;
-  setSelected: (selected: number) => void;
+  select: (selected: number) => void;
   setQuery: (query: string) => void;
 };
 
@@ -12,7 +12,7 @@ export const useGalleryStore = create<GalleryStore>()(
   devtools((set) => ({
     selected: null,
     query: '',
-    setSelected: (selected) => set({ selected }),
+    select: (selected) => set({ selected }),
     setQuery: (query) => set({ query }),
   })),
 );
