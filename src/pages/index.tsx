@@ -1,21 +1,32 @@
 import { Suspense } from 'react';
 import { Text } from '@react-three/drei';
+import { Filter } from '@/components/dom/filter';
 import dynamic from 'next/dynamic';
-import Filter from '@/components/dom/Filter';
 import Head from 'next/head';
 
-const Gallery = dynamic(() => import('@/components/canvas/Gallery'), {
-  ssr: false,
-});
-const Scene = dynamic(() => import('@/components/canvas/Scene'), {
-  ssr: false,
-});
+const Gallery = dynamic(
+  () => import('@/components/canvas/gallery').then((mod) => mod.Gallery),
+  {
+    ssr: false,
+  },
+);
+
+const Scene = dynamic(
+  () => import('@/components/canvas/scene').then((mod) => mod.Scene),
+  {
+    ssr: false,
+  },
+);
 
 export default function Page() {
   return (
     <>
       <Head>
         <title>Rick and Morty 3D Gallery</title>
+        <meta
+          name="viewport"
+          content="width=device-width, minimum-scale=1, initial-scale=1.0"
+        />
       </Head>
       <div className="h-screen bg-zinc-800">
         <div className="absolute top-0 left-0 z-10 flex flex-col items-center justify-between w-full p-8 sm:flex-row space-y-4">

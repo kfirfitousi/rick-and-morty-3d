@@ -4,10 +4,10 @@ import { useGalleryStore } from '@/stores/gallery-store';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { ResponseSchema } from '@/types';
 import { Scroll, ScrollControls } from '@react-three/drei';
-import { LoadMore } from '@/components/canvas/LoadMore';
-import { Cube } from '@/components/canvas/Cube';
+import { LoadMore } from '@/components/canvas/load-more';
+import { Cube } from '@/components/canvas/cube';
 
-export default function Gallery() {
+export function Gallery() {
   const { viewport } = useThree();
 
   const xW = 2; // Cube width + margin
@@ -27,16 +27,16 @@ export default function Gallery() {
     },
   );
 
-  const charactersFilter = useGalleryStore((state) => state.filter);
+  const query = useGalleryStore((state) => state.query);
 
   const filteredCharacters = useMemo(
     () =>
       data?.pages
         .flatMap((page) => page.results)
         .filter((character) =>
-          character.name.toLowerCase().includes(charactersFilter.toLowerCase()),
+          character.name.toLowerCase().includes(query.toLowerCase()),
         ),
-    [data, charactersFilter],
+    [data, query],
   );
 
   return (

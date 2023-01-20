@@ -2,7 +2,7 @@ import { Canvas } from '@react-three/fiber';
 import { Preload } from '@react-three/drei';
 import { useGalleryStore } from '@/stores/gallery-store';
 
-export default function Scene({ children, ...props }) {
+export function Scene({ children, ...props }) {
   const setSelected = useGalleryStore((state) => state.setSelected);
 
   return (
