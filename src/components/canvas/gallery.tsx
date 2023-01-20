@@ -59,12 +59,14 @@ export function Gallery() {
             scale={[1, 1, 1]}
           />
         ))}
-        <LoadMore
-          hasNextPage={hasNextPage}
-          fetchNextPage={fetchNextPage}
-          position={[filteredCharacters?.length * xW, 0, 0]}
-          count={filteredCharacters?.length}
-        />
+        {!query && (
+          <LoadMore
+            hasNextPage={hasNextPage}
+            fetchNextPage={fetchNextPage}
+            position={[filteredCharacters?.length * xW, 0, 0]}
+            count={filteredCharacters?.length}
+          />
+        )}
       </Scroll>
     </ScrollControls>
   );
