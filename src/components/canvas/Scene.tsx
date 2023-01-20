@@ -8,11 +8,11 @@ export default function Scene({ children, ...props }) {
   return (
     <Canvas
       {...props}
+      onPointerMissed={() => setSelected(null)}
       camera={{
         position: [0, 0, 10],
         fov: 30,
-      }}
-      onPointerMissed={() => setSelected(null)}>
+      }}>
       <directionalLight intensity={0.75} />
       <ambientLight intensity={0.75} />
       {children}

@@ -1,28 +1,18 @@
-import { Scroll, ScrollControls, Text } from '@react-three/drei'
-import { useThree } from '@react-three/fiber'
-import { useInfiniteQuery } from '@tanstack/react-query'
-import { ResponseSchema } from '@/hooks/useCharacters'
-import { useGalleryStore } from '@/stores/gallery-store'
 import { useMemo } from 'react'
-import Cube from '@/components/canvas/Cube'
+import { useThree } from '@react-three/fiber'
+import { useGalleryStore } from '@/stores/gallery-store'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { ResponseSchema } from '@/types'
+import { Scroll, ScrollControls } from '@react-three/drei'
+import { LoadMore } from '@/components/canvas/LoadMore'
+import { Cube } from '@/components/canvas/Cube'
 
 export default function Gallery() {
   const { viewport } = useThree()
 
   const xW = 2 // Cube width + margin
 
-  const {
-    status,
-    data,
-    error,
-    isFetching,
-    isFetchingNextPage,
-    isFetchingPreviousPage,
-    fetchNextPage,
-    fetchPreviousPage,
-    hasNextPage,
-    hasPreviousPage,
-  } = useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ['characters'],
     async ({ pageParam = 1 }) => {
       const res = await fetch(`https://rickandmortyapi.com/api/character/?page=${pageParam}`)
@@ -45,7 +35,7 @@ export default function Gallery() {
   )
 
   return (
-    <ScrollControls horizontal damping={5} pages={(viewport.width + filteredCharacters?.length * xW) / viewport.width}>
+    <ScrollControls horizontal damping={20} pages={(viewport.width + filteredCharacters?.length * xW) / viewport.width}>
       <Scroll>
         {filteredCharacters?.map((character, i) => (
           <Cube
@@ -58,13 +48,12 @@ export default function Gallery() {
             scale={[1, 1, 1]}
           />
         ))}
-        <mesh position={[filteredCharacters?.length * xW, 0, 0]} onClick={() => fetchNextPage()}>
-          <planeGeometry args={[1, 1]} />
-          <meshBasicMaterial color='white' />
-          <Text color='black' fontSize={0.15}>
-            {isFetchingNextPage ? 'Loading more...' : hasNextPage ? 'Load More' : 'Nothing more to load'}
-          </Text>
-        </mesh>
+        <LoadMore
+          hasNextPage={hasNextPage}
+          fetchNextPage={fetchNextPage}
+          position={[filteredCharacters?.length * xW, 0, 0]}
+          count={filteredCharacters?.length}
+        />
       </Scroll>
     </ScrollControls>
   )
