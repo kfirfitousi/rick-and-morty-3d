@@ -23,15 +23,15 @@ export function LoadMore({
         scroll.el.scrollLeft = 0; // reset scroll position, couldn't find a better way
       }}
     >
-      <boxGeometry args={[1, 1, 1]} />
+      <sphereGeometry args={[0.5, 4]} />
       <meshBasicMaterial color="#a1a1aa" />
       <Text
-        color="#27272a"
+        color="#3f3f46"
         font="/Inter.ttf"
-        fontSize={0.15}
+        fontSize={0.6}
         position={[0, 0, 0.5]}
       >
-        Load More
+        +
       </Text>
     </mesh>
   );
