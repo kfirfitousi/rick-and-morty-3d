@@ -1,4 +1,4 @@
-import z from 'zod'
+import z from 'zod';
 
 const CharacterSchema = z.object({
   id: z.number(),
@@ -10,9 +10,9 @@ const CharacterSchema = z.object({
   origin: z.object({
     name: z.string(),
   }),
-})
+});
 
-export type Character = z.infer<typeof CharacterSchema>
+export type Character = z.infer<typeof CharacterSchema>;
 
 export const ResponseSchema = z.object({
   info: z.object({
@@ -22,4 +22,4 @@ export const ResponseSchema = z.object({
     prev: z.string().nullable(),
   }),
   results: z.array(CharacterSchema),
-})
+});
