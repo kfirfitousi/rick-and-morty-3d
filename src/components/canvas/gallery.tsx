@@ -3,7 +3,7 @@ import { useThree } from '@react-three/fiber';
 import { useGalleryStore } from '@/stores/gallery-store';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { ResponseSchema } from '@/types';
-import { Scroll, ScrollControls } from '@react-three/drei';
+import { Text, Scroll, ScrollControls } from '@react-three/drei';
 import { LoadMore } from '@/components/canvas/load-more';
 import { Cube } from '@/components/canvas/cube';
 
@@ -12,13 +12,14 @@ export function Gallery() {
 
   const xW = 2; // Cube width + margin
 
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
+  const { data, isError, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ['characters'],
     async ({ pageParam = 1 }) => {
       const res = await fetch(
         `https://rickandmortyapi.com/api/character/?page=${pageParam}`,
       );
-      return ResponseSchema.parse(await res.json());
+      const data = await res.json();
+      return ResponseSchema.parse(data);
     },
     {
       getPreviousPageParam: (firstPage) =>
@@ -38,6 +39,19 @@ export function Gallery() {
         ),
     [data, query],
   );
+
+  if (isError) {
+    return (
+      <Text
+        color="#f43f5e"
+        fontSize={0.2}
+        position={[0, 0, 0]}
+        font="/Inter.ttf"
+      >
+        Error occurred while fetching data
+      </Text>
+    );
+  }
 
   return (
     <ScrollControls

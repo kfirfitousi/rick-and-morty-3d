@@ -1,20 +1,18 @@
-import { Suspense } from 'react';
-import { Text } from '@react-three/drei';
-import { Filter } from '@/components/dom/filter';
-import dynamic from 'next/dynamic';
 import Head from 'next/head';
-
-const Gallery = dynamic(
-  () => import('@/components/canvas/gallery').then((mod) => mod.Gallery),
-  {
-    ssr: false,
-  },
-);
+import dynamic from 'next/dynamic';
+import { Filter } from '@/components/dom/filter';
 
 const Scene = dynamic(
   () => import('@/components/canvas/scene').then((mod) => mod.Scene),
   {
     ssr: false,
+    loading() {
+      return (
+        <div className="row-start-2 flex h-full animate-pulse items-center justify-center text-center text-2xl text-zinc-300">
+          Loading...
+        </div>
+      );
+    },
   },
 );
 
@@ -29,29 +27,14 @@ export default function Page() {
         />
       </Head>
       <div className="h-screen bg-zinc-800">
-        <div className="absolute top-0 left-0 z-10 flex flex-col items-center justify-between w-full p-8 sm:flex-row space-y-4">
-          <h1 className="text-xl font-semibold text-center sm:text-2xl text-zinc-300">
+        <div className="absolute top-0 left-0 z-10 flex w-full flex-col items-center justify-between space-y-4 p-8 sm:flex-row">
+          <h1 className="text-center text-xl font-semibold text-zinc-300 sm:text-2xl">
             Rick and Morty
             <span className="text-rose-200"> 3D Gallery</span>
           </h1>
           <Filter />
         </div>
-        <Scene gl={{ antialias: false }} dpr={[1, 1.5]} className="row-start-2">
-          <Suspense
-            fallback={
-              <Text
-                color="#FECDD3"
-                font="/Inter.ttf"
-                fontSize={0.25}
-                position={[0, 0, 0]}
-              >
-                Loading...
-              </Text>
-            }
-          >
-            <Gallery />
-          </Suspense>
-        </Scene>
+        <Scene className="row-start-2" />
       </div>
     </>
   );

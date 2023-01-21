@@ -1,5 +1,6 @@
 {
-  "extends": ["next", "prettier", "plugin:tailwind/recommended"],
+  "extends": ["next", "prettier"],
+  "plugins": ["eslint-plugin-tailwindcss"],
   "rules": {
     "import/prefer-default-export": "off",
     "no-console": "warn",

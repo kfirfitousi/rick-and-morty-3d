@@ -1,8 +1,9 @@
-import { Canvas } from '@react-three/fiber';
-import { Preload } from '@react-three/drei';
+import { Canvas, type Props } from '@react-three/fiber';
 import { useGalleryStore } from '@/stores/gallery-store';
+import { Preload } from '@react-three/drei';
+import { Gallery } from './gallery';
 
-export function Scene({ children, ...props }) {
+export function Scene(props: Omit<Props, 'children'>) {
   const select = useGalleryStore((state) => state.select);
 
   return (
@@ -16,7 +17,7 @@ export function Scene({ children, ...props }) {
     >
       <directionalLight intensity={0.75} />
       <ambientLight intensity={0.75} />
-      {children}
+      <Gallery />
       <Preload all />
     </Canvas>
   );
